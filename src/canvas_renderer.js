@@ -7,7 +7,7 @@
  * New Player code for adapted eidgo code.
  */
 
-class GoBoardCanvasRenderer {
+export class GoBoardCanvasRenderer {
     constructor(canvas_element, size) {
         this.canvas = canvas_element;
         this.size   = size;

@@ -8,7 +8,13 @@
  * New Player code for adapted eidgo code.
  */
 
-class GoEditor {
+import { Board }                    from 'eidogo2/board.js'
+import { Rules }                    from 'eidogo2/rules.js'
+import { GameNode, GameCursor }     from 'eidogo2/gametree.js'
+import { SgfParser }                from 'eidogo2/sgf.js'
+import * as util                    from 'eidogo2/utils.js'
+
+export class GoEditor {
     constructor(renderer) {
         this.renderer = renderer;
         this.reset_label_counter();
@@ -305,6 +311,17 @@ class GoEditor {
         var root = this.cursor.getGameRoot();
         if (root && root.HA > 1)
             this.currentColor = 'W';
+    }
+
+    get_next_move_color_num() {
+        let num_clr = this.currentColor == "W"
+                      ? this.board.WHITE
+                      : this.board.BLACK;
+        return num_clr;
+    }
+
+    get_board_moves() {
+        return this.board.get_stone_pt_list();
     }
 
     ph_set_color(color) {
@@ -646,9 +663,7 @@ class GoEditor {
         // TODO: remove this.currentColor, replace it with some
         //       method on cursor that figures the color out
         //       without us having to keep color state...
-        let num_clr = this.currentColor == "W"
-                      ? this.board.WHITE
-                      : this.board.BLACK;
+        let num_clr = this.get_next_move_color_num();
         if (!this.rules.check_with_ko_and_suicide(pt, num_clr)) {
             return;
         }

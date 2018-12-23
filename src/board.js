@@ -204,6 +204,20 @@ export class Board {
         return this.markers[pt.y * this.boardSize + pt.x];
     }
 
+    get_stone_pt_list() {
+        let stone_pt_list = [];
+        let stones = this.stones;
+        for (var x = 0; x < this.boardSize; x++) {
+            for (var y = 0; y < this.boardSize; y++) {
+                let offset = y * this.boardSize + x;
+                let color = stones[offset];
+                if (color == this.WHITE || color == this.BLACK)
+                    stone_pt_list.push([color, x + 1, y + 1])
+            }
+        }
+        return stone_pt_list;
+    }
+
     render() {
         var type;
         var len;
