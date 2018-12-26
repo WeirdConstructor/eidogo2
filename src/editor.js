@@ -320,6 +320,14 @@ export class GoEditor {
         return num_clr;
     }
 
+    get_board_moves_gtp() {
+        let l = this.board.get_stone_pt_list()
+        for (let i = 0; i < l.length; i++) {
+            l[i][2] = (this.size - l[i][2]) + 1;
+        }
+        return l
+    }
+
     get_board_moves() {
         return this.board.get_stone_pt_list();
     }

@@ -149,6 +149,16 @@ export class GameNode {
     }
 
     /**
+     * Applies \a fn to all nodes up to the current node,
+     * starting from the root node.
+    **/
+    walk_up(fn, n) {
+        if (!n) return;
+        walk_up(fn, n._parent);
+        fn(n);
+    }
+
+    /**
      * Applies a function to this node and all its children, recursively
      * (although we use a stack instead of actual recursion)
     **/
@@ -179,10 +189,8 @@ export class GameNode {
      * Get the current black or white move as a raw SGF coordinate
     **/
     getMove() {
-        if (typeof this.W != "undefined")
-            return this.W;
-        else if (typeof this.B != "undefined")
-            return this.B;
+        if      (this.W != null) return this.W;
+        else if (this.B != null) return this.B;
         return null;
     }
 
